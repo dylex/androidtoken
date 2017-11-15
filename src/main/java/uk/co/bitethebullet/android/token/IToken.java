@@ -1,6 +1,6 @@
 /*
  * Copyright Mark McAvoy - www.bitethebullet.co.uk 2009
- * 
+ *
  * This file is part of Android Token.
  *
  * Android Token is free software: you can redistribute it and/or modify
@@ -20,20 +20,20 @@
 package uk.co.bitethebullet.android.token;
 
 public interface IToken {
-	
-	public String getName();
-	
-	public String getSerialNumber();
-	
-	public int getTokenType();
-	
-	public String generateOtp();
-	
-	public long getId();
-	
-	public void setId(long id);
-	
-	public int getTimeStep();
 
-	public void maskSeed(byte[] mask);
+    public String getName();
+
+    public String getSerialNumber();
+
+    public int getTokenType();
+
+    public String generateOtp();
+
+    public long getId();
+
+    public void setId(long id);
+
+    public int getTimeStep();
+
+    public void maskSeed(byte[] mask);
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright Mark McAvoy - www.bitethebullet.co.uk 2009
- * 
+ *
  * This file is part of Android Token.
  *
  * Android Token is free software: you can redistribute it and/or modify
@@ -30,8 +30,8 @@ import android.database.Cursor;
 
 public class PinManager {
 
-	private static final String SALT = "EE08F4A6-8497-4330-8CD5-8A4ABD93CD46";
-	private static final String MASK = "GBKOISIIHVE7WBEI7O33KQY7CI";
+    private static final String SALT = "EE08F4A6-8497-4330-8CD5-8A4ABD93CD46";
+    private static final String MASK = "GBKOISIIHVE7WBEI7O33KQY7CI";
 
     private static byte[] hashWith(String salt, String pin) {
         try {
@@ -40,31 +40,31 @@ public class PinManager {
             md.update(salt.getBytes());
             md.update(pin.getBytes());
             return md.digest();
-		}catch(NoSuchAlgorithmException ex){
-			return null;
-		}
+        }catch(NoSuchAlgorithmException ex){
+            return null;
+        }
     }
-	
-	public static Boolean hasPinDefined(Context c){
-		TokenDbAdapter db = new TokenDbAdapter(c);
-		db.open();
-		
-		Cursor cursor = db.fetchPin();
-		
+
+    public static Boolean hasPinDefined(Context c){
+        TokenDbAdapter db = new TokenDbAdapter(c);
+        db.open();
+
+        Cursor cursor = db.fetchPin();
+
         boolean hasPin = false;
         if (cursor != null) {
             hasPin = true;
             cursor.close();
         }
 
-		db.close();
-		
-		return hasPin;
-	}
-	
-	private static String createPinHash(String pin) {
+        db.close();
+
+        return hasPin;
+    }
+
+    private static String createPinHash(String pin) {
         return Hex.byteArrayToHex(hashWith(SALT, pin));
-	}
+    }
 
     private static byte[] getSeedMask(String pin) {
         if (pin == null)
@@ -74,16 +74,16 @@ public class PinManager {
         return hashWith(MASK, pin);
     }
 
-	public static byte[] validatePinGetSeedMask(Context c, String pin){
+    public static byte[] validatePinGetSeedMask(Context c, String pin){
 
-		boolean isValid;
+        boolean isValid;
         boolean maskSeed = false;
 
-		TokenDbAdapter db = new TokenDbAdapter(c);
-		db.open();
-		Cursor cursor = db.fetchPin();
-		
-		if (cursor == null)
+        TokenDbAdapter db = new TokenDbAdapter(c);
+        db.open();
+        Cursor cursor = db.fetchPin();
+
+        if (cursor == null)
             // if no pin hash we treat empty string as correct
             isValid = pin == null || pin.isEmpty();
         else {
@@ -99,17 +99,17 @@ public class PinManager {
 
             maskSeed = cursor.getInt(cursor.getColumnIndexOrThrow(TokenDbAdapter.KEY_PIN_MASK_SEED)) > 0;
             cursor.close();
-		}
-		
-		db.close();
-		
+        }
+
+        db.close();
+
         if (isValid)
             return getSeedMask(maskSeed ? pin : null);
         else
             return null;
-	}
+    }
 
-	public static byte[] changePin(Context c, String old, String pin, boolean maskSeed, boolean validate){
+    public static byte[] changePin(Context c, String old, String pin, boolean maskSeed, boolean validate){
         byte[] oldmask = validatePinGetSeedMask(c, old);
         if (oldmask == null)
             return null;
@@ -117,8 +117,8 @@ public class PinManager {
         byte[] mask = getSeedMask(maskSeed ? pin : null);
         String hash = validate ? createPinHash(pin) : null;
 
-		TokenDbAdapter db = new TokenDbAdapter(c);
-		db.open();
+        TokenDbAdapter db = new TokenDbAdapter(c);
+        db.open();
 
         if (pin == null)
             db.deletePin();
@@ -141,12 +141,12 @@ public class PinManager {
             cursor.close();
         }
 
-		db.close();
+        db.close();
 
         return mask;
-	}
+    }
 
-	public static boolean removePin(Context c, String old){
+    public static boolean removePin(Context c, String old){
         return changePin(c, old, null, false, false) != null;
     }
 }

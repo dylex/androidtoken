@@ -1,7 +1,7 @@
 package uk.co.bitethebullet.android.token.util;
 
 public class Hex {
-	private static final String HEX_ENCODING_TABLE = "0123456789abcdef";
+    private static final String HEX_ENCODING_TABLE = "0123456789abcdef";
 
     private static void setHex(char[] hex, int i, byte b) {
         hex[2*i] = HEX_ENCODING_TABLE.charAt((b & 0xf0) >> 4);
@@ -11,7 +11,7 @@ public class Hex {
     private static byte getHex(String hex, int i) {
         return (byte)Integer.parseInt(hex.substring(2*i, 2*i+2), 16);
     }
-    
+
     public static String byteArrayToHex(byte[] bts) {
         if (bts == null)
             return null;
@@ -28,12 +28,12 @@ public class Hex {
         if (hex == null)
             return null;
 
-		byte[] bts = new byte[hex.length() / 2];
-		
-		for (int i = 0; i < bts.length; i++)
-			bts[i] = getHex(hex, i);
-		
-		return bts;
+        byte[] bts = new byte[hex.length() / 2];
+
+        for (int i = 0; i < bts.length; i++)
+            bts[i] = getHex(hex, i);
+
+        return bts;
     }
 
     public static String xorHexWith(String hex, byte[] bts) {

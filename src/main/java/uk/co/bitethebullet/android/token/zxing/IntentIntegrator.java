@@ -71,11 +71,11 @@ import android.util.Log;
  * user was prompted to download the application. This lets the calling app potentially manage the dialog.
  * In particular, ideally, the app dismisses the dialog if it's still active in its {@link Activity#onPause()}
  * method.</p>
- * 
+ *
  * <p>You can use {@link #setTitle(String)} to customize the title of this download prompt dialog (or, use
  * {@link #setTitleByID(int)} to set the title by string resource ID.) Likewise, the prompt message, and
  * yes/no button labels can be changed.</p>
- * 
+ *
  * <p>By default, this will only allow applications that are known to respond to this intent correctly
  * do so. The apps that are allowed to response can be set with {@link #setTargetApplications(Collection)}.
  * For example, set to {@link #TARGET_BARCODE_SCANNER_ONLY} to only target the Barcode Scanner app itself.</p>
@@ -114,7 +114,7 @@ public final class IntentIntegrator {
   public static final Collection<String> DATA_MATRIX_TYPES = Collections.singleton("DATA_MATRIX");
 
   public static final Collection<String> ALL_CODE_TYPES = null;
-  
+
   public static final Collection<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singleton(BS_PACKAGE);
   public static final Collection<String> TARGET_ALL_KNOWN = list(
           BS_PACKAGE, // Barcode Scanner
@@ -122,14 +122,14 @@ public final class IntentIntegrator {
           "com.srowen.bs.android.simple" // Barcode Scanner+ Simple
           // TODO add more -- what else supports this intent?
       );
-  
+
   private final Activity activity;
   private String title;
   private String message;
   private String buttonYes;
   private String buttonNo;
   private Collection<String> targetApplications;
-  
+
   public IntentIntegrator(Activity activity) {
     this.activity = activity;
     title = DEFAULT_TITLE;
@@ -138,11 +138,11 @@ public final class IntentIntegrator {
     buttonNo = DEFAULT_NO;
     targetApplications = TARGET_ALL_KNOWN;
   }
-  
+
   public String getTitle() {
     return title;
   }
-  
+
   public void setTitle(String title) {
     this.title = title;
   }
@@ -186,15 +186,15 @@ public final class IntentIntegrator {
   public void setButtonNoByID(int buttonNoID) {
     buttonNo = activity.getString(buttonNoID);
   }
-  
+
   public Collection<String> getTargetApplications() {
     return targetApplications;
   }
-  
+
   public void setTargetApplications(Collection<String> targetApplications) {
     this.targetApplications = targetApplications;
   }
-  
+
   public void setSingleTargetApplication(String targetApplication) {
     this.targetApplications = Collections.singleton(targetApplication);
   }
@@ -238,7 +238,7 @@ public final class IntentIntegrator {
     activity.startActivityForResult(intentScan, REQUEST_CODE);
     return null;
   }
-  
+
   private String findTargetAppPackage(Intent intent) {
     PackageManager pm = activity.getPackageManager();
     List<ResolveInfo> availableApps = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
@@ -324,7 +324,7 @@ public final class IntentIntegrator {
       activity.startActivity(intent);
     }
   }
-  
+
   private static Collection<String> list(String... values) {
     return Collections.unmodifiableCollection(Arrays.asList(values));
   }

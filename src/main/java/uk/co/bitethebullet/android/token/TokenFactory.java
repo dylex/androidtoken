@@ -1,6 +1,6 @@
 /*
  * Copyright Mark McAvoy - www.bitethebullet.co.uk 2009
- * 
+ *
  * This file is part of Android Token.
  *
  * Android Token is free software: you can redistribute it and/or modify
@@ -23,60 +23,60 @@ import android.database.Cursor;
 
 public class TokenFactory {
 
-	/**
-	 * Creates a IToken object from the database cursor
-	 * @param c
-	 * @param ctx
-	 * @return
-	 */
-	public static IToken CreateToken(Cursor c, byte[] seedMask){
-		
-		if(c == null){
-			return null;
-		}
-		
-		IToken token = null;
-		
-		int tokenType = c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_TYPE));
-		
-		switch(tokenType){
-		
-		case TokenDbAdapter.TOKEN_TYPE_EVENT:
-			token = CreateHotpToken(c);
-			break;
-			
-		case TokenDbAdapter.TOKEN_TYPE_TIME:
-			token = CreateTotpToken(c);
-			break;
-		
-		default:
-			return null;
-		}	
-		
-		token.setId(c.getLong(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_ROWID)));
+    /**
+     * Creates a IToken object from the database cursor
+     * @param c
+     * @param ctx
+     * @return
+     */
+    public static IToken CreateToken(Cursor c, byte[] seedMask){
+
+        if(c == null){
+            return null;
+        }
+
+        IToken token = null;
+
+        int tokenType = c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_TYPE));
+
+        switch(tokenType){
+
+        case TokenDbAdapter.TOKEN_TYPE_EVENT:
+            token = CreateHotpToken(c);
+            break;
+
+        case TokenDbAdapter.TOKEN_TYPE_TIME:
+            token = CreateTotpToken(c);
+            break;
+
+        default:
+            return null;
+        }
+
+        token.setId(c.getLong(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_ROWID)));
         token.maskSeed(seedMask);
-		return token;
-	}
-	
-	private static IToken CreateHotpToken(Cursor c){
-		HotpToken token = new HotpToken(
-								c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_NAME)), 
-								c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SERIAL)), 
-								c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SEED)), 
-								c.getLong(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_COUNT)), 
-								c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_OTP_LENGTH)));
-		
-		return token;
-	}
-	
-	private static IToken CreateTotpToken(Cursor c){
-		TotpToken token = new TotpToken(
-										c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_NAME)), 
-										c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SERIAL)), 
-										c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SEED)), 
-										c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_TIME_STEP)), 
-										c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_OTP_LENGTH)));
-		
-		return token;
-	}
+        return token;
+    }
+
+    private static IToken CreateHotpToken(Cursor c){
+        HotpToken token = new HotpToken(
+                                c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_NAME)),
+                                c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SERIAL)),
+                                c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SEED)),
+                                c.getLong(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_COUNT)),
+                                c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_OTP_LENGTH)));
+
+        return token;
+    }
+
+    private static IToken CreateTotpToken(Cursor c){
+        TotpToken token = new TotpToken(
+                                        c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_NAME)),
+                                        c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SERIAL)),
+                                        c.getString(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_SEED)),
+                                        c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_TIME_STEP)),
+                                        c.getInt(c.getColumnIndexOrThrow(TokenDbAdapter.KEY_TOKEN_OTP_LENGTH)));
+
+        return token;
+    }
 }

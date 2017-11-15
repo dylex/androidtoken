@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Base32 {
 
-	private static final String DEF_ENCODING_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    private static final String DEF_ENCODING_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     private static final char DEF_PADDING = '=';
 
     private String eTable; //Encoding table
@@ -13,14 +13,14 @@ public class Base32 {
 
     public Base32 ()
     {
-    	this (DEF_ENCODING_TABLE, DEF_PADDING);
+        this (DEF_ENCODING_TABLE, DEF_PADDING);
     }
-    
+
     public Base32 (char padding){
-    	this (DEF_ENCODING_TABLE, padding);
+        this (DEF_ENCODING_TABLE, padding);
     }
     public Base32 (String encodingTable){
-    	this (encodingTable, DEF_PADDING);
+        this (encodingTable, DEF_PADDING);
     }
 
     public Base32 (String encodingTable, char padding) {
@@ -34,7 +34,7 @@ public class Base32 {
         StringBuffer output = new StringBuffer ();
         int specialLength = input.length % 5;
         int normalLength = input.length - specialLength;
-        
+
         for (int i = 0; i < normalLength; i += 5) {
             int b1 = input[i] & 0xff;
             int b2 = input[i + 1] & 0xff;
@@ -104,10 +104,10 @@ public class Base32 {
     }
 
     public byte[] decodeBytes (String data) {
-		ArrayList<Byte> outStream = new ArrayList<Byte>();
+        ArrayList<Byte> outStream = new ArrayList<Byte>();
 
         int length = data.length();
-        
+
         while (length > 0) {
             if (!this.Ignore (data.charAt(length - 1))) break;
             length--;
@@ -141,12 +141,12 @@ public class Base32 {
         this.DecodeLastBlock (outStream,
             data.charAt(length - 8), data.charAt(length - 7), data.charAt(length - 6), data.charAt(length - 5),
             data.charAt(length - 4), data.charAt(length - 3), data.charAt(length - 2), data.charAt(length - 1));
-        
+
         byte[] result = new byte[outStream.size()];
         for(int j = 0; j < outStream.size(); j++){
-        	result[j] = outStream.get(j).byteValue();
+            result[j] = outStream.get(j).byteValue();
         }
-        
+
         return result;
     }
 
@@ -230,6 +230,6 @@ public class Base32 {
             dTable[eTable.charAt(i)] = (byte)i;
         }
     }
-	
-	
+
+
 }

@@ -12,31 +12,31 @@ import android.graphics.RectF;
 import android.view.View;
 
 public class TokenCountDownView extends View {
-	
-	public TokenCountDownView(Context context){
-		super(context);
-	}
 
-	@Override
-	protected void onDraw(Canvas canvas) {
-		
-		Paint p = new Paint();
+    public TokenCountDownView(Context context){
+        super(context);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        Paint p = new Paint();
         p.setAntiAlias(true);
         p.setStyle(Paint.Style.FILL);
-        p.setColor(0x88FF0000);			
-		
-		RectF oval = new RectF( 0, 0, 50, 50);
-		drawArc(canvas, oval, true, p);		
-	}
-	
-	
-	private void drawArc(Canvas canvas, RectF oval, boolean useCenter, Paint paint) {
-		
-		float mStart = 0;
-		float mSweep = 360;
-		
-		canvas.drawArc(oval, mStart, mSweep, useCenter, paint);
-	}
-	
-	
+        p.setColor(0x88FF0000);
+
+        RectF oval = new RectF( 0, 0, 50, 50);
+        drawArc(canvas, oval, true, p);
+    }
+
+
+    private void drawArc(Canvas canvas, RectF oval, boolean useCenter, Paint paint) {
+
+        float mStart = 0;
+        float mSweep = 360;
+
+        canvas.drawArc(oval, mStart, mSweep, useCenter, paint);
+    }
+
+
 }
