@@ -164,7 +164,7 @@ public class TokenList extends ListActivity {
                 if(mOtpUpdateTask == this){
                     TokenList.this.fillData();
 
-                    mHandler.postDelayed(mOtpUpdateTask, 1000);
+                    mHandler.postDelayed(mOtpUpdateTask, 10000);
                 }
             }
         };
